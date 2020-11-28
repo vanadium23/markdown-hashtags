@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "markdown",
+  "injectionSelector": "L:text.html.markdown",
+  "patterns": [
+    {
+      "match": "(^|\\s)(\\#[\\w\\p{L}\\-\\_]+)",
+      "name": "text.markdown.hashtags.tag",
+      "captures": {
+        "2": {
+          "name": "support.function.text.markdown.hashtags.tag.title"
+        }
+      }
+    }
+  ],
+  "scopeName": "text.markdown.hashtags"
+}
