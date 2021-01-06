@@ -4,7 +4,7 @@
 	"description": "Hashtags for markdown: autocomplete, tree view and references.",
 	"version": "1.0.0",
 	"publisher": "vanadium23",
-	"author": "Svyatoslav Sobol <svyatoslav.sobol@gmail.com>",
+	"author": "Ivan Chernov <chernoffivan@gmail.com>",
 	"license": "MIT",
 	"icon": "images/markdown-hashtags.png",
 	"engines": {
