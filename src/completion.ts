@@ -10,13 +10,13 @@ export class HashtagCompletionItemProvider {
         const tagTree = await getTagTree(false);
         // const linePrefix = document.lineAt(position).text.substr(0, position.character);
         const uniqueTags = Object.keys(tagTree);
-        const competions = [];
+        const completions = [];
         for (let index = 0; index < uniqueTags.length; index++) {
-            competions.push(
+            completions.push(
                 new vscode.CompletionItem(uniqueTags[index].replace('#', ''), vscode.CompletionItemKind.Keyword)
             );
         }
 
-        return competions;
+        return completions;
     }
 };
