@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.1.0] - 2021.01.06
+
+- Add feature to support unicode hashtags (see [#5](https://github.com/vanadium23/markdown-hashtags/issues/5))
+
 ## [1.0.0] - 2020.11.28
 
 - Initial release
