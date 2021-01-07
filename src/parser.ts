@@ -10,7 +10,7 @@ type NotesTree = {
     [key: string]: TagTree,
 };
 
-const hashtagRegexp = /\B(#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+)/gm;
+const hashtagRegexp = /(^|\s)(#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+)/gm;
 
 // global state, I know
 let tags: TagTree = {};
