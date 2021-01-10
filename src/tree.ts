@@ -37,8 +37,14 @@ export class HashtagTree implements vscode.TreeDataProvider<HashtagTreeItem | Fi
 }
 
 export class FileTreeItem extends vscode.TreeItem {
-    constructor(public readonly uri: vscode.Uri, public readonly files: vscode.Location[], public readonly collapsibleState: vscode.TreeItemCollapsibleState) {
+    constructor(
+        public readonly uri: vscode.Uri,
+        public readonly files: vscode.Location[],
+        public readonly collapsibleState: vscode.TreeItemCollapsibleState
+    ) {
         super(uri, collapsibleState);
+        const file = files[0];
+        this.description = `${file.range.start.line + 1}:${file.range.start.character}`;
         this.command = {
             title: 'Open File',
             command: 'vscode.open',
@@ -47,7 +53,7 @@ export class FileTreeItem extends vscode.TreeItem {
                 {
                     preview: true,
                     // fragile code
-                    selection: files[0].range,
+                    selection: file.range,
                 },
             ],
         };
@@ -63,7 +69,7 @@ export class HashtagTreeItem extends vscode.TreeItem {
         public readonly command?: vscode.Command
     ) {
         super(label, collapsibleState);
-
+        this.description = `(${this.files.length})`;
         this.tooltip = `${this.label} (${this.files.length})`;
     }
 }
