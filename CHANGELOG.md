@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.2.0] - 2021.01.10
+
+- Add count and position to description in hashtag tree provider.
+
 ## [1.1.1] - 2021.01.07
 
 - Fix hashtag regexp to match only from new line and space.
