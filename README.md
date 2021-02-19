@@ -31,19 +31,4 @@ Extension can conflict with [Markdown Notes extension](https://marketplace.visua
 
 ## Release Notes
 
-## 1.2.0
-
-- Add count and position to description in hashtag tree provider.
-
-## 1.1.1
-
-- Fix hashtag regexp to match only from new line and space. ([#8](https://github.com/vanadium23/markdown-hashtags/issues/8) and [#9](https://github.com/vanadium23/markdown-hashtags/issues/9) bugs).
-
-### 1.1.0
-
-- Add feature to support unicode hashtags (see [#5](https://github.com/vanadium23/markdown-hashtags/issues/5)).
-- Fix a lot of grammar 😢.
-
-### 1.0.0
-
-- Initial release of `markdown-hashtags`
+See [Changelog](CHANGELOG.md).

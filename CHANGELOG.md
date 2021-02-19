@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.2.1] - 2021.02.19
+
+- Fix space in autocompletion (see [#12](https://github.com/vanadium23/markdown-hashtags/issues/12)).
+
 ## [1.2.0] - 2021.01.10
 
 - Add count and position to description in hashtag tree provider.

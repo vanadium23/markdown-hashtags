@@ -39,7 +39,7 @@ const parseFile = async (filePath: string) => {
     notes[filePath] = content.split(/\r?\n/).reduce((acc: TagTree, line: string, index: number): TagTree => {
         const matches = line.matchAll(hashtagRegexp) || [];
         for (const match of matches) {
-            const hashtag = match[0];
+            const hashtag = match[2];
             const position = new vscode.Position(index, match.index || 0);
             const location = new vscode.Location(uri, position);
             if (acc[hashtag]) {
