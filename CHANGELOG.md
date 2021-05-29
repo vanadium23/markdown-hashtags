@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.3.0] - 2021.05.29
+
+- Add two sorting options (alphabetical, counter) to configuration (see [#14](https://github.com/vanadium23/markdown-hashtags/issues/14)).
+
 ## [1.2.1] - 2021.02.19
 
 - Fix space in autocompletion (see [#12](https://github.com/vanadium23/markdown-hashtags/issues/12)).
