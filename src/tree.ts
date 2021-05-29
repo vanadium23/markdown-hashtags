@@ -1,7 +1,18 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
-import * as path from 'path';
 import { getTagTree } from './parser';
+
+type SortingFunctions = {
+    [key: string]: (a: HashtagTreeItem|FileTreeItem, b: HashtagTreeItem|FileTreeItem) => number,
+};
+
+const sortingOptions: SortingFunctions = {
+    "count": (a: HashtagTreeItem|FileTreeItem, b: HashtagTreeItem|FileTreeItem) => {
+        return a.files.length - b.files.length;
+    },
+    "name": (a: HashtagTreeItem|FileTreeItem, b: HashtagTreeItem|FileTreeItem) => {
+        return ('' + a.label).localeCompare('' + b.label);
+    },
+};
 
 export class HashtagTree implements vscode.TreeDataProvider<HashtagTreeItem | FileTreeItem> {
 
@@ -31,7 +42,15 @@ export class HashtagTree implements vscode.TreeDataProvider<HashtagTreeItem | Fi
                 tagItems.push(new HashtagTreeItem(tag, files, vscode.TreeItemCollapsibleState.Collapsed));
             }
 
-            return tagItems.sort((a, b) => b.files.length - a.files.length);
+            const sortingKey = vscode.workspace.getConfiguration('markdown-hashtags').get('sorting.key') as string;
+            const sortingOrder = vscode.workspace.getConfiguration('markdown-hashtags').get('sorting.order') as string;
+            const sortingFunction = sortingOptions[sortingKey];
+            let sign = 1;
+            if (sortingOrder === 'desc') {
+                sign = -1;
+            }
+
+            return tagItems.sort((a,b) => sign*sortingFunction(a,b));
         });
     }
 }

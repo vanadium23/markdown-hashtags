@@ -22,6 +22,10 @@ export async function activate(context: vscode.ExtensionContext) {
         hashtagTree.refresh();
     });
 
+    vscode.workspace.onDidChangeConfiguration(async (e: vscode.ConfigurationChangeEvent) => {
+        hashtagTree.refresh();
+    });
+
 
     context.subscriptions.push(
         vscode.languages.registerReferenceProvider('markdown', new HashtagReferenceProvider()),

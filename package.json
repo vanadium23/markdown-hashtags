@@ -53,6 +53,35 @@
 					"name": "Hashtag Tree"
 				}
 			]
+		},
+		"configuration": {
+			"title": "Markdown Hashtags",
+			"properties": {
+				"markdown-hashtags.sorting.key": {
+					"type": "string",
+					"default": "count",
+					"enum": [
+						"name",
+						"count"
+					],
+					"enumDescriptions": [
+						"Sort hashtags by name",
+						"Sort hashtags by count"
+					]
+				},
+				"markdown-hashtags.sorting.order": {
+					"type": "string",
+					"default": "desc",
+					"enum": [
+						"asc",
+						"desc"
+					],
+					"enumDescriptions": [
+						"Ascending order for sorting key",
+						"Descending order for sorting key"
+					]
+				}
+			}
 		}
 	},
 	"scripts": {
