@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.3.1] - 2021.07.27
+
+- Only complete on one hashtag symbol (see [#3](https://github.com/vanadium23/markdown-hashtags/issues/3) and [comment](https://github.com/vanadium23/markdown-hashtags/issues/13#issuecomment-886175972)).
+
 ## [1.3.0] - 2021.05.29
 
 - Add two sorting options (alphabetical, counter) to configuration (see [#14](https://github.com/vanadium23/markdown-hashtags/issues/14)).
