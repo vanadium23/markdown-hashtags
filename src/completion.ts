@@ -8,8 +8,9 @@ export class HashtagCompletionItemProvider {
         position: vscode.Position
     ) {
         // https://github.com/vanadium23/markdown-hashtags/issues/13#issuecomment-886175972
-        const linePrefix = document.lineAt(position).text.substr(0, position.character);
-        if (/##$/.test(linePrefix)) {
+        const begin = position.character > 2 ? position.character - 2 : 0;
+        const linePrefix = document.lineAt(position).text.substr(begin, position.character);
+        if (!/^\s?\#$/.test(linePrefix)) {
             return [];
         }
         const tagTree = await getTagTree(false);
