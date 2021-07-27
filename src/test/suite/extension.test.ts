@@ -6,7 +6,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { getTagTree } from '../../parser';
 
-const testFolderLocation = '/../../../src/test/suite/'
+const testFolderLocation = '/../../../src/test/suite/';
 
 suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
