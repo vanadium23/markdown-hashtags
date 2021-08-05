@@ -38,6 +38,14 @@ export async function activate(context: vscode.ExtensionContext) {
         vscode.workspace.getConfiguration().update('markdown-hashtags.sorting.order', 'desc');
     });
 
+    vscode.commands.registerCommand('markdown-hashtags.setSortByName', () => {
+        vscode.workspace.getConfiguration().update('markdown-hashtags.sorting.key', 'name');
+    });
+
+    vscode.commands.registerCommand('markdown-hashtags.setSortByCount', () => {
+        vscode.workspace.getConfiguration().update('markdown-hashtags.sorting.key', 'count');
+    });
+
     context.subscriptions.push(
         vscode.languages.registerReferenceProvider('markdown', new HashtagReferenceProvider()),
     );

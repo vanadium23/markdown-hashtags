@@ -32,7 +32,7 @@
 		"commands": [
 			{
 				"command": "markdown-hashtags.refreshTags",
-				"title": "Markdown Hashtags: Refresh",
+				"title": "Markdown Hashtags: Refresh tags",
 				"icon": {
 					"light": "resources/light/refresh.svg",
 					"dark": "resources/dark/refresh.svg"
@@ -52,6 +52,22 @@
 				"icon": {
 					"light": "resources/light/arrow-down.svg",
 					"dark": "resources/dark/arrow-down.svg"
+				}
+			},
+			{
+				"command": "markdown-hashtags.setSortByName",
+				"title": "Markdown Hashtags: Sort by name",
+				"icon": {
+					"light": "resources/light/string.svg",
+					"dark": "resources/dark/string.svg"
+				}
+			},
+			{
+				"command": "markdown-hashtags.setSortByCount",
+				"title": "Markdown Hashtags: Sort by count",
+				"icon": {
+					"light": "resources/light/number.svg",
+					"dark": "resources/dark/number.svg"
 				}
 			}
 		],
@@ -95,6 +111,16 @@
 				{
 					"command": "markdown-hashtags.setDescendingSort",
 					"when": "view == hashtagTree && config.markdown-hashtags.sorting.order != desc",
+					"group": "navigation"
+				},
+				{
+					"command": "markdown-hashtags.setSortByName",
+					"when": "view == hashtagTree && config.markdown-hashtags.sorting.key != name",
+					"group": "navigation"
+				},
+				{
+					"command": "markdown-hashtags.setSortByCount",
+					"when": "view == hashtagTree && config.markdown-hashtags.sorting.key != count",
 					"group": "navigation"
 				}
 			]
