@@ -30,6 +30,14 @@ export async function activate(context: vscode.ExtensionContext) {
         hashtagTree.refresh();
     });
 
+    vscode.commands.registerCommand('markdown-hashtags.setAscendingSort', () => {
+        vscode.workspace.getConfiguration().update('markdown-hashtags.sorting.order', 'asc');
+    });
+
+    vscode.commands.registerCommand('markdown-hashtags.setDescendingSort', () => {
+        vscode.workspace.getConfiguration().update('markdown-hashtags.sorting.order', 'desc');
+    });
+
     context.subscriptions.push(
         vscode.languages.registerReferenceProvider('markdown', new HashtagReferenceProvider()),
     );
