@@ -29,6 +29,16 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"commands": [
+			{
+				"command": "markdown-hashtags.refreshTags",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			}
+		],
 		"languages": [
 			{
 				"id": "markdown-hashtags",
@@ -51,6 +61,15 @@
 				{
 					"id": "hashtagTree",
 					"name": "Hashtag Tree"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "markdown-hashtags.refreshTags",
+					"when": "view == hashtagTree",
+					"group": "navigation"
 				}
 			]
 		},
