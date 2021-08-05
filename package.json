@@ -29,6 +29,48 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"commands": [
+			{
+				"command": "markdown-hashtags.refreshTags",
+				"title": "Markdown Hashtags: Refresh tags",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "markdown-hashtags.setAscendingSort",
+				"title": "Markdown Hashtags: Set ascending order",
+				"icon": {
+					"light": "resources/light/arrow-up.svg",
+					"dark": "resources/dark/arrow-up.svg"
+				}
+			},
+			{
+				"command": "markdown-hashtags.setDescendingSort",
+				"title": "Markdown Hashtags: Set descending order",
+				"icon": {
+					"light": "resources/light/arrow-down.svg",
+					"dark": "resources/dark/arrow-down.svg"
+				}
+			},
+			{
+				"command": "markdown-hashtags.setSortByName",
+				"title": "Markdown Hashtags: Sort by name",
+				"icon": {
+					"light": "resources/light/string.svg",
+					"dark": "resources/dark/string.svg"
+				}
+			},
+			{
+				"command": "markdown-hashtags.setSortByCount",
+				"title": "Markdown Hashtags: Sort by count",
+				"icon": {
+					"light": "resources/light/number.svg",
+					"dark": "resources/dark/number.svg"
+				}
+			}
+		],
 		"languages": [
 			{
 				"id": "markdown-hashtags",
@@ -51,6 +93,35 @@
 				{
 					"id": "hashtagTree",
 					"name": "Hashtag Tree"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "markdown-hashtags.refreshTags",
+					"when": "view == hashtagTree",
+					"group": "navigation"
+				},
+				{
+					"command": "markdown-hashtags.setAscendingSort",
+					"when": "view == hashtagTree && config.markdown-hashtags.sorting.order != asc",
+					"group": "navigation"
+				},
+				{
+					"command": "markdown-hashtags.setDescendingSort",
+					"when": "view == hashtagTree && config.markdown-hashtags.sorting.order != desc",
+					"group": "navigation"
+				},
+				{
+					"command": "markdown-hashtags.setSortByName",
+					"when": "view == hashtagTree && config.markdown-hashtags.sorting.key != name",
+					"group": "navigation"
+				},
+				{
+					"command": "markdown-hashtags.setSortByCount",
+					"when": "view == hashtagTree && config.markdown-hashtags.sorting.key != count",
+					"group": "navigation"
 				}
 			]
 		},

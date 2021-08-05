@@ -26,6 +26,25 @@ export async function activate(context: vscode.ExtensionContext) {
         hashtagTree.refresh();
     });
 
+    vscode.commands.registerCommand('markdown-hashtags.refreshTags', () => {
+        hashtagTree.refresh();
+    });
+
+    vscode.commands.registerCommand('markdown-hashtags.setAscendingSort', () => {
+        vscode.workspace.getConfiguration().update('markdown-hashtags.sorting.order', 'asc');
+    });
+
+    vscode.commands.registerCommand('markdown-hashtags.setDescendingSort', () => {
+        vscode.workspace.getConfiguration().update('markdown-hashtags.sorting.order', 'desc');
+    });
+
+    vscode.commands.registerCommand('markdown-hashtags.setSortByName', () => {
+        vscode.workspace.getConfiguration().update('markdown-hashtags.sorting.key', 'name');
+    });
+
+    vscode.commands.registerCommand('markdown-hashtags.setSortByCount', () => {
+        vscode.workspace.getConfiguration().update('markdown-hashtags.sorting.key', 'count');
+    });
 
     context.subscriptions.push(
         vscode.languages.registerReferenceProvider('markdown', new HashtagReferenceProvider()),
