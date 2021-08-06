@@ -4,7 +4,7 @@
   "injectionSelector": "L:text.html.markdown",
   "patterns": [
     {
-      "match": "(^|\\s)(\\#[\\w\\p{L}\\-\\_]+)",
+      "match": "(^|\\s+)(\\#[\\w\\p{L}\\-\\_]+)",
       "name": "text.markdown.hashtags.tag",
       "captures": {
         "2": {
