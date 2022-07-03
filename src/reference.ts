@@ -1,13 +1,13 @@
-import * as vscode from 'vscode';
-import { findDefinitions } from './parser';
+import * as vscode from "vscode";
+import { findReferences } from "./parser";
 
 export class HashtagReferenceProvider implements vscode.ReferenceProvider {
-  public provideReferences(
+  public async provideReferences(
     document: vscode.TextDocument,
     position: vscode.Position,
     context: vscode.ReferenceContext,
     token: vscode.CancellationToken
-  ): vscode.ProviderResult<vscode.Location[]> {
-    return findDefinitions(document, position);
+  ): Promise<vscode.Location[] | null | undefined> {
+    return await findReferences(document, position);
   }
-};
+}

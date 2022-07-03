@@ -1,27 +1,72 @@
-import * as vscode from 'vscode';
-import { getTagTree } from "./parser";
+import * as vscode from "vscode";
+import { getTagTree, GetTagTreeReason, TagTree } from "./parser";
+import { getAllPaths } from "./util.js";
 
-// If so, provide appropriate completion items from the current workspace
-export class HashtagCompletionItemProvider {
-    public async provideCompletionItems(
-        document: vscode.TextDocument,
-        position: vscode.Position
-    ) {
-        // https://github.com/vanadium23/markdown-hashtags/issues/13#issuecomment-886175972
-        const begin = position.character > 2 ? position.character - 2 : 0;
-        const linePrefix = document.lineAt(position).text.substr(begin, position.character);
-        if (!/^\s?\#$/.test(linePrefix)) {
-            return [];
-        }
-        const tagTree = await getTagTree(false);
-        const uniqueTags = Object.keys(tagTree);
-        const completions = [];
-        for (let index = 0; index < uniqueTags.length; index++) {
-            completions.push(
-                new vscode.CompletionItem(uniqueTags[index].replace('#', ''), vscode.CompletionItemKind.Keyword)
-            );
-        }
-
-        return completions;
+export class HashtagCompletionItemProvider implements vscode.CompletionItemProvider {
+  public async provideCompletionItems(
+    document: vscode.TextDocument,
+    position: vscode.Position,
+    token: vscode.CancellationToken,
+    context: vscode.CompletionContext
+  ) {
+    const text = document.lineAt(position).text.substring(0, position.character);
+    const slashMatched = text
+      .split("")
+      .reverse()
+      .join("")
+      .match(/^\/[^\s!@#$%^&*()=+.,\[{\]};:'"?><]+#(\s|$)/);
+    let hashtagPath: string | undefined;
+    if (/(?<=(^|\s))#$/.test(text)) {
+    } else if (slashMatched !== null) {
+      hashtagPath = text.slice(text.length - slashMatched[0].trimEnd().length + 1);
+      // hashtagPathWithSlash = hashtagPathWithSlash.slice(0, hashtagPathWithSlash.length - 1);
+    } else {
+      return [];
     }
-};
+
+    const tagTree = await getTagTree(GetTagTreeReason.justGet);
+    const allPaths = await getAllPaths(tagTree, ["locations"]);
+
+    const completions: vscode.CompletionItem[] = [];
+    const tasks: Promise<void>[] = [];
+
+    for (const path of allPaths) {
+      tasks.push(
+        (async () => {
+          let pathStr = path.join("/");
+          pathStr = pathStr.replace(/child\//g, "");
+          let insertText = pathStr;
+          if (hashtagPath) {
+            const lowerHashtagPath = hashtagPath.toLowerCase();
+            const lowerPathStr = pathStr.toLowerCase();
+            if (lowerHashtagPath !== lowerPathStr) {
+              if (pathStr.length > hashtagPath.length) {
+                if (lowerPathStr.includes(lowerHashtagPath)) {
+                  insertText = pathStr.replace(hashtagPath, "");
+                } else {
+                  return;
+                }
+              } else {
+                return;
+                // if (lowerHashtagPath.includes(lowerPathStr)) {
+                //   insertText = hashtagPath.replace(pathStr, "");
+                // } else {
+                //   return;
+                // }
+              }
+            }
+          }
+          if (insertText === "/") {
+            insertText = "";
+          }
+          const completionItem = new vscode.CompletionItem(pathStr, vscode.CompletionItemKind.Keyword);
+          completionItem.insertText = insertText;
+          completions.push(completionItem);
+        })()
+      );
+    }
+    await Promise.all(tasks);
+
+    return completions;
+  }
+}

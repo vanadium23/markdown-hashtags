@@ -2,7 +2,9 @@
 
 Test hashtag parsing regexp to cover bugs from github.
 
-#标签
+#标签/子标签
+
+#launage/English/grammar
 
 # title 1
 
