@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [2.0.0] - 2022.07.18
+
+- Add support for nested hashtags (see [#22](https://github.com/vanadium23/markdown-hashtags/pull/22)).
+  - Great job by @Decmoe47
+
 ## [1.4.0] - 2021.08.05
 
 - Add buttons to hashtag tree view (see [#18](https://github.com/vanadium23/markdown-hashtags/issues/18))
