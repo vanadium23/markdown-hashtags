@@ -1,23 +1,110 @@
-import * as path from 'path';
+import * as path from "path";
+import * as cp from "child_process";
 
-import { runTests } from 'vscode-test';
+import { runTests, downloadAndUnzipVSCode, resolveCliArgsFromVSCodeExecutablePath } from "@vscode/test-electron";
 
-async function main() {
-	try {
-		// The folder containing the Extension Manifest package.json
-		// Passed to `--extensionDevelopmentPath`
-		const extensionDevelopmentPath = path.resolve(__dirname, '../../');
+async function go() {
+    try {
+        const extensionDevelopmentPath = path.resolve(__dirname, "../../../");
+        const extensionTestsPath = path.resolve(__dirname, "./suite");
 
-		// The path to test runner
-		// Passed to --extensionTestsPath
-		const extensionTestsPath = path.resolve(__dirname, './suite/index');
+        /**
+         * Basic usage
+         */
+        await runTests({
+            extensionDevelopmentPath,
+            extensionTestsPath,
+        });
 
-		// Download VS Code, unzip it and run the integration test
-		await runTests({ extensionDevelopmentPath, extensionTestsPath });
-	} catch (err) {
-		console.error('Failed to run tests');
-		process.exit(1);
-	}
+        const extensionTestsPath2 = path.resolve(__dirname, "./suite2");
+        const testWorkspace = path.resolve(__dirname, "../../../test-fixtures/fixture1");
+
+        /**
+         * Running another test suite on a specific workspace
+         */
+        await runTests({
+            extensionDevelopmentPath,
+            extensionTestsPath: extensionTestsPath2,
+            launchArgs: [testWorkspace],
+        });
+
+        /**
+         * Use 1.36.1 release for testing
+         */
+        await runTests({
+            version: "1.36.1",
+            extensionDevelopmentPath,
+            extensionTestsPath,
+            launchArgs: [testWorkspace],
+        });
+
+        /**
+         * Use Insiders release for testing
+         */
+        await runTests({
+            version: "insiders",
+            extensionDevelopmentPath,
+            extensionTestsPath,
+            launchArgs: [testWorkspace],
+        });
+
+        /**
+         * Noop, since 1.36.1 already downloaded to .vscode-test/vscode-1.36.1
+         */
+        await downloadAndUnzipVSCode("1.36.1");
+
+        /**
+         * Manually download VS Code 1.35.0 release for testing.
+         */
+        const vscodeExecutablePath = await downloadAndUnzipVSCode("1.35.0");
+        await runTests({
+            vscodeExecutablePath,
+            extensionDevelopmentPath,
+            extensionTestsPath,
+            launchArgs: [testWorkspace],
+        });
+
+        /**
+         * Install Python extension
+         */
+        const [cli, ...args] = resolveCliArgsFromVSCodeExecutablePath(vscodeExecutablePath);
+        cp.spawnSync(cli, [...args, "--install-extension", "ms-python.python"], {
+            encoding: "utf-8",
+            stdio: "inherit",
+        });
+
+        /**
+         * - Add additional launch flags for VS Code
+         * - Pass custom environment variables to test runner
+         */
+        await runTests({
+            vscodeExecutablePath,
+            extensionDevelopmentPath,
+            extensionTestsPath,
+            launchArgs: [
+                testWorkspace,
+                // This disables all extensions except the one being testing
+                "--disable-extensions",
+            ],
+            // Custom environment variables for extension test script
+            extensionTestsEnv: { foo: "bar" },
+        });
+
+        /**
+         * Use win64 instead of win32 for testing Windows
+         */
+        if (process.platform === "win32") {
+            await runTests({
+                extensionDevelopmentPath,
+                extensionTestsPath,
+                version: "1.40.0",
+                platform: "win32-x64-archive",
+            });
+        }
+    } catch (err) {
+        console.error("Failed to run tests");
+        process.exit(1);
+    }
 }
 
-main();
+go();
