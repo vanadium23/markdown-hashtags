@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [2.0.1] - 2022.07.30
+
+- Minor release with fix in package.json.
+
 ## [2.0.0] - 2022.07.18
 
 - Add support for nested hashtags (see [#22](https://github.com/vanadium23/markdown-hashtags/pull/22)).
