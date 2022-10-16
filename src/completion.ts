@@ -14,7 +14,9 @@ export class HashtagCompletionItemProvider implements vscode.CompletionItemProvi
       .split("")
       .reverse()
       .join("")
-      .match(/^\/[^\s!@#$%^&*()=+.,\[{\]};:'"?><]+#(\s|$)/);
+      // #24 in addition to "/" also "." can be used as tag separator
+      // .match(/^\/[^\s!@#$%^&*()=+.,\[{\]};:'"?><]+#(\s|$)/);
+      .match(/^\/[^\s!@#$%^&*()=+,\[{\]};:'"?><]+#(\s|$)/);
     let hashtagPath: string | undefined;
     if (/(?<=(^|\s))#$/.test(text)) {
     } else if (slashMatched !== null) {
@@ -33,6 +35,7 @@ export class HashtagCompletionItemProvider implements vscode.CompletionItemProvi
     for (const path of allPaths) {
       tasks.push(
         (async () => {
+          // TODO: #24 - evaluate how to use "." in autocompletition as well.
           let pathStr = path.join("/");
           pathStr = pathStr.replace(/child\//g, "");
           let insertText = pathStr;

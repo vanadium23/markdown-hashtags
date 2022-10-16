@@ -22,10 +22,13 @@ type NotesTree = {
 
 // `?<=` to except `(^|\s)#` it self
 //
-// The `[\s]?` is to require a hashtag (or nested hashtags) must followed by a whilespace character
+// The `[\s]?` is to require a hashtag (or nested hashtags) must followed by a whitespace character
 // or at the end of the line, in order to avoid https://github.com/vanadium23/markdown-hashtags/issues/13.
 // Do not forget to use `.trimEnd()` in the code.
-export const hashtagRegexp = /(?<=(^|\s)#)[^\s!@#$%^&*()=+.,\[{\]};:'"?><]+[\s]?/g;
+
+// #24 in addition to "/" also "." can be used as tag separator
+// export const hashtagRegexp = /(?<=(^|\s)#)[^\s!@#$%^&*()=+.,\[{\]};:'"?><]+[\s]?/g;
+export const hashtagRegexp = /(?<=(^|\s)#)[^\s!@#$%^&*()=+,\[{\]};:'"?><]+[\s]?/g;
 
 // use closure to avoid global state which cause
 function _tagTree() {
@@ -152,7 +155,19 @@ async function parseFile(filePath: string, needCheckExts: boolean = true) {
       const position = new vscode.Position(index, match.index || 0);
       const location = new vscode.Location(uri, position);
 
-      const splitedTags = hashtag.split("/");
+      // #24 in addition to "/" also "." can be used as tag separator
+      // https://www.javascripttutorial.net/javascript-string-split/
+      // The following example uses the split() method to split sentences in a paragraph into sentences:
+      // let paragraph = 'Good Morning! How are you? This is John. John is my friend.';
+      // let sentences = paragraph.split(/[!,?,.]/);
+      // console.log(sentences);
+
+      // https://www.javascripttutorial.net/javascript-regular-expression/
+      // To create a regular expression in JavaScript, you enclose its pattern in forward-slash characters (/) like this:
+      // let re = /hi/;
+
+      // const splitedTags = hashtag.split("/");
+      const splitedTags = hashtag.split(/[\/\.]/);
       await insertInEachElem(splitedTags, "child");
       const path = splitedTags.concat(["locations"]);
       const res = await getDeepProp(note.tags, path);
