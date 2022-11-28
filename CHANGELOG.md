@@ -6,6 +6,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+- in addition to "/" also "." can be used as tag separator (see [#24](https://github.com/vanadium23/markdown-hashtags/issues/24))
+
 ## [2.0.1] - 2022.07.30
 
 - Minor release with fix in package.json.
