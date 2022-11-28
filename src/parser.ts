@@ -27,7 +27,6 @@ type NotesTree = {
 // Do not forget to use `.trimEnd()` in the code.
 
 // #24 in addition to "/" also "." can be used as tag separator
-// export const hashtagRegexp = /(?<=(^|\s)#)[^\s!@#$%^&*()=+.,\[{\]};:'"?><]+[\s]?/g;
 export const hashtagRegexp = /(?<=(^|\s)#)[^\s!@#$%^&*()=+,\[{\]};:'"?><]+[\s]?/g;
 
 // use closure to avoid global state which cause
