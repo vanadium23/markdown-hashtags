@@ -2,7 +2,7 @@
   "name": "markdown-hashtags",
   "displayName": "markdown-hashtags",
   "description": "Hashtags for markdown: autocomplete, tree view and references.",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "publisher": "vanadium23",
   "author": "Ivan Chernov <chernoffivan@gmail.com>",
   "license": "MIT",
